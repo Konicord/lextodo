@@ -1,0 +1,52 @@
+<section class="todoapp">
+  <header class="header">
+    <h1>todos</h1>
+    <form phx-submit="create" id="form">
+  <input
+    id="new_todo"
+    class="new-todo"
+    type="text"
+    name="text"
+    placeholder="What needs to be done?"
+    autofocus=""
+    required="required"
+  />
+</form>
+  </header>
+  <section class="main" style="display: block;">
+    <input id="toggle-all" class="toggle-all" type="checkbox" />
+    <label for="toggle-all">Mark all as complete</label>
+    <ul class="todo-list">
+    <%= for item <- @items do %>
+    <li data-id={item.id} class={completed?(item)}>
+      <div class="view">
+        <%= if checked?(item) do %>
+          <input class="toggle" type="checkbox" phx-value-id={item.id} phx-click="toggle" checked />
+        <% else %>
+          <input class="toggle" type="checkbox" phx-value-id={item.id} phx-click="toggle" />
+        <% end %>
+        <label><%= item.text %></label>
+        <button class="destroy" phx-click="delete" phx-value-id={item.id}></button>
+      </div>
+    </li>
+    <% end %>
+</ul>
+  </section>
+  <footer class="footer" style="display: block;">
+    <span class="todo-count"><strong>1</strong> item left</span>
+    <ul class="filters">
+      <li>
+        <a href="#/" class="selected">All</a>
+      </li>
+      <li>
+        <a href="#/active">Active</a>
+      </li>
+      <li>
+        <a href="#/completed">Completed</a>
+      </li>
+    </ul>
+    <button class="clear-completed" style="display: block;">
+      Clear completed
+    </button>
+  </footer>
+</section>
